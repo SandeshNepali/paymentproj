@@ -30,39 +30,26 @@ const Dashboard = () => {
 
 
     return (
-        <Box
-            sx={{
-                p: { xs: 1, sm: 3, md: 4 },
-                position: "relative",
-                minHeight: "100vh",
-            }}
-        >
+
+        <Box sx={{ m: 3, position: "relative" }}>
             <Button
                 variant="outlined"
                 color="secondary"
                 onClick={handleLogout}
                 sx={{
                     position: "absolute",
-                    top: { xs: 8, sm: 16 },
-                    right: { xs: 8, sm: 16 },
+                    top: 16,
+                    right: 16,
                     textTransform: "none",
                     borderRadius: 2,
-                    borderColor: "white",
-                    color: "white",
-                    fontSize: { xs: "0.8rem", sm: "1rem" },
+                    borderColor: "black",
+                    color: "white"
                 }}
             >
                 Logout
             </Button>
 
-            <Typography
-                variant="h4"
-                mb={4}
-                mt={5}
-                color="white"
-                textAlign={{ xs: "center", sm: "left" }}
-                fontSize={{ xs: "1.5rem", sm: "2rem" }}
-            >
+            <Typography variant="h4" mb={2} color="white">
                 Welcome to the Dashboard, {user.username}!
             </Typography>
 

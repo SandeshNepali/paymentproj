@@ -128,8 +128,8 @@ const Admin = () => {
     }
 
     return (
-        <Box sx={{ p: { xs: 2, md: 4 } }}>
-            <Typography variant="h4" mb={4} color="white" textAlign={{ xs: "center", md: "left" }}>
+        <Box sx={{ p: 3 }}>
+            <Typography variant="h4" mb={4} color="white">
                 Hotels List
             </Typography>
 
@@ -140,7 +140,7 @@ const Admin = () => {
             ) : (
                 <Grid container spacing={3}>
                     {hotels.map((hotel) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={hotel.hotel_id}>
+                        <Grid item xs={12} sm={6} md={4} key={hotel.hotel_id}>
                             <Card
                                 sx={{
                                     height: "100%",
@@ -149,11 +149,12 @@ const Admin = () => {
                                     justifyContent: "space-between",
                                     boxShadow: 3,
                                     borderRadius: 2,
+                                    borderColor: "red",
                                     backgroundColor: "#394851",
-                                    color: "white",
+                                    color: "white"
                                 }}
                             >
-                                <CardContent>
+                                <CardContent color={"white"}>
                                     <Typography variant="h6" gutterBottom>
                                         {hotel.name}
                                     </Typography>
@@ -170,12 +171,11 @@ const Admin = () => {
                                     <Typography variant="body2" color="white">
                                         <strong>Off Peak Rate:</strong> ${hotel.off_peak_rate}
                                     </Typography>
-                                    <Box sx={{ display: "flex", gap: 1, mt: 2, flexWrap: "wrap" }}>
+                                    <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
                                         <Button
                                             variant="contained"
                                             color="primary"
                                             onClick={() => handleUpdateClick(hotel)}
-                                            sx={{ flex: 1 }}
                                         >
                                             Update
                                         </Button>
@@ -183,7 +183,6 @@ const Admin = () => {
                                             variant="outlined"
                                             color="error"
                                             onClick={() => handleDeleteClick(hotel.id)}
-                                            sx={{ flex: 1 }}
                                         >
                                             Delete
                                         </Button>
@@ -203,7 +202,7 @@ const Admin = () => {
             >
                 <Box
                     sx={{
-                        width: { xs: "90%", sm: 400 },
+                        width: 400,
                         bgcolor: "background.paper",
                         p: 3,
                         borderRadius: 2,
@@ -213,19 +212,46 @@ const Admin = () => {
                     <Typography variant="h6" mb={2}>
                         Update Hotel Details
                     </Typography>
-                    {["name", "city", "capacity", "peak_season_rate", "off_peak_rate"].map(
-                        (field, index) => (
-                            <TextField
-                                key={index}
-                                label={field.replace(/_/g, " ").toUpperCase()}
-                                fullWidth
-                                name={field}
-                                value={selectedHotel?.[field] || ""}
-                                onChange={handleUpdateChange}
-                                sx={{ mb: 2 }}
-                            />
-                        )
-                    )}
+                    <TextField
+                        label="Name"
+                        fullWidth
+                        name="name"
+                        value={selectedHotel?.name || ""}
+                        onChange={handleUpdateChange}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="City"
+                        fullWidth
+                        name="city"
+                        value={selectedHotel?.city || ""}
+                        onChange={handleUpdateChange}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Capacity"
+                        fullWidth
+                        name="capacity"
+                        value={selectedHotel?.capacity || ""}
+                        onChange={handleUpdateChange}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Peak Season Rate"
+                        fullWidth
+                        name="peak_season_rate"
+                        value={selectedHotel?.peak_season_rate || ""}
+                        onChange={handleUpdateChange}
+                        sx={{ mb: 2 }}
+                    />
+                    <TextField
+                        label="Off Peak Rate"
+                        fullWidth
+                        name="off_peak_rate"
+                        value={selectedHotel?.off_peak_rate || ""}
+                        onChange={handleUpdateChange}
+                        sx={{ mb: 2 }}
+                    />
                     <Button
                         variant="contained"
                         color="primary"

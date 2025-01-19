@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { config } from "../../utils/config";
 import axios from "axios";
-import { Box, CircularProgress, Typography, Paper } from "@mui/material";
+import { Box, CircularProgress, Typography, Paper, Grid } from "@mui/material";
 import UserReport from "./UserReport";
 import HotelOccupancy from "./HotelOccupancy";
 import RevenueReport from "./RevenueReport";
@@ -14,7 +14,7 @@ const Report = () => {
     const [error, setError] = useState(null);
 
     // Fetch user report data
-    const fetchUserReport = async (userId) => {
+    const fetchUserReport = async () => {
         try {
             const response = await axios.get(config.topUsers(10), {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -26,9 +26,9 @@ const Report = () => {
     };
 
     // Fetch hotel occupancy data
-    const fetchHotelOccupancy = async (hotelId) => {
+    const fetchHotelOccupancy = async () => {
         try {
-            const response = await axios.get(config.hotelOccupancy(hotelId), {
+            const response = await axios.get(config.hotelOccupancy(1), {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
             setHotelOccupancyData(response.data);
@@ -38,9 +38,9 @@ const Report = () => {
     };
 
     // Fetch revenue report data
-    const fetchRevenueReport = async (startDate, endDate) => {
+    const fetchRevenueReport = async () => {
         try {
-            const response = await axios.get(config.revenueReport(startDate, endDate), {
+            const response = await axios.get(config.revenueReport("2025-01-01", "2025-01-31"), {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
             setRevenueReportData(response.data);
@@ -51,16 +51,22 @@ const Report = () => {
 
     useEffect(() => {
         setLoading(true);
-        // Example of fetching data, you can customize the user ID, hotel ID, and dates
-        fetchUserReport(1); // Fetch report for user with ID 1
-        fetchHotelOccupancy(1); // Fetch occupancy data for hotel with ID 1
-        fetchRevenueReport("2025-01-01", "2025-01-31"); // Fetch revenue report for January 2025
+        fetchUserReport();
+        fetchHotelOccupancy();
+        fetchRevenueReport();
         setLoading(false);
     }, []);
 
     if (loading) {
         return (
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                }}
+            >
                 <CircularProgress />
             </Box>
         );
@@ -68,29 +74,112 @@ const Report = () => {
 
     if (error) {
         return (
-            <Typography variant="h6" color="error" align="center">
+            <Typography variant="h6" color="error" align="center" sx={{ mt: 4 }}>
                 {error}
             </Typography>
         );
     }
 
     return (
-        <div style={{ padding: "20px" }}>
-            <Typography variant="h4" gutterBottom color="white">
+        <Box
+            sx={{
+                p: { xs: 2, sm: 3, md: 4 },
+                minHeight: "100vh",
+                color: "white",
+            }}
+        >
+            <Typography
+                variant="h4"
+                gutterBottom
+                align="center"
+                sx={{
+                    fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+                    mb: { xs: 2, sm: 4 },
+                }}
+            >
                 Reports
             </Typography>
 
-            {
-                userReportData && <UserReport data={userReportData} />
-            }
-            {
-                hotelOccupancyData && <HotelOccupancy data={[hotelOccupancyData]} />
-            }
-            {
-                revenueReportData && <RevenueReport data={[revenueReportData]} />
-            }
+            <Grid container spacing={3} sx={{ width: "90%" }}>
+                {/* User Report Section */}
+                {userReportData && (
+                    <Grid item xs={12}>
+                        <Paper
+                            elevation={3}
+                            sx={{
+                                p: { xs: 2, sm: 3 },
+                                borderRadius: 2,
+                                bgcolor: "#394851",
+                                color: "white",
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                gutterBottom
+                                sx={{
+                                    fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                                }}
+                            >
+                                User Report
+                            </Typography>
+                            <UserReport data={userReportData} />
+                        </Paper>
+                    </Grid>
+                )}
 
-        </div>
+                {/* Hotel Occupancy Section */}
+                {hotelOccupancyData && (
+                    <Grid item xs={12}>
+                        <Paper
+                            elevation={3}
+                            sx={{
+                                p: { xs: 2, sm: 3 },
+                                borderRadius: 2,
+                                bgcolor: "#394851",
+                                color: "white",
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                gutterBottom
+                                sx={{
+                                    fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                                }}
+                            >
+                                Hotel Occupancy
+                            </Typography>
+                            <HotelOccupancy data={[hotelOccupancyData]} />
+                        </Paper>
+                    </Grid>
+                )}
+
+                {/* Revenue Report Section */}
+                {revenueReportData && (
+                    <Grid item xs={12}>
+                        <Paper
+                            elevation={3}
+                            sx={{
+                                p: { xs: 2, sm: 3 },
+                                borderRadius: 2,
+                                bgcolor: "#394851",
+                                color: "white",
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                gutterBottom
+                                sx={{
+                                    fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                                }}
+                            >
+                                Revenue Report
+                            </Typography>
+                            <RevenueReport data={[revenueReportData]} />
+                        </Paper>
+                    </Grid>
+                )}
+            </Grid>
+        </Box>
     );
 };
 

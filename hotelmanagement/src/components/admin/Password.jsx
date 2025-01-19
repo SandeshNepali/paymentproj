@@ -13,9 +13,11 @@ import {
     Box,
     TextField,
     Typography,
+    useMediaQuery,
 } from "@mui/material";
 import { config } from "../../utils/config";
 import { toast } from "react-toastify";
+import { useTheme } from '@mui/system';
 
 const Password = () => {
     const [users, setUsers] = useState([]); // Stores all users
@@ -24,7 +26,8 @@ const Password = () => {
     const [open, setOpen] = useState(false); // Modal open/close state
     const [selectedUser, setSelectedUser] = useState(null); // Selected user for password update
     const [newPassword, setNewPassword] = useState(""); // New password input
-
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     // Fetch users on component mount
     useEffect(() => {
         const fetchUsers = async () => {
@@ -84,10 +87,10 @@ const Password = () => {
 
     return (
         <div>
-            <Typography variant="h4" gutterBottom color="white">
+            <Typography variant="h4" gutterBottom color="white" marginTop={5}>
                 All Users
             </Typography>
-            <TableContainer component={Paper} sx={{ backgroundColor: "#394851" }}>
+            <TableContainer component={Paper} sx={{ backgroundColor: "#394851", width: isSmallScreen ? "350px" : "100%", }}>
                 <Table>
                     <TableHead>
                         <TableRow>

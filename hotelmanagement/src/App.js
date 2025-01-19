@@ -29,7 +29,6 @@ const LayoutWithSidebar = () => (
 
 function App() {
   return (
-    // <Box sx={{ backgroundColor: "#303c46", minHeight: "100vh" }}>
     <Box sx={{ backgroundColor: "#384750", minHeight: "100vh" }}>
 
       <ToastContainer />
