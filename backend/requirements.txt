@@ -1,0 +1,7 @@
+Flask==2.1.2
+Flask-SQLAlchemy==2.5.1
+Flask-HTTPAuth==4.4.0
+Werkzeug==2.1.2
+python-dotenv==0.19.2
+flask_httpauth
+flask_session
